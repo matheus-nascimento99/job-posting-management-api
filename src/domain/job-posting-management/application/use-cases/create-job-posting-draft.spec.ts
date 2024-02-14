@@ -21,7 +21,7 @@ describe('Create job posting use case', () => {
     )
   })
 
-  it('should be able to create a job posting', async () => {
+  it('should be able to create a job posting draft', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 
@@ -34,12 +34,10 @@ describe('Create job posting use case', () => {
     })
 
     expect(result.isRight()).toEqual(true)
-    expect(result.value).toMatchObject({
-      jobPosting: { title: expect.any(String) },
-    })
+    expect(inMemoryJobPostingsRepository.items).toHaveLength(1)
   })
 
-  it('should not be able to create a job posting with an inexistent company', async () => {
+  it('should not be able to create a job posting draft with an inexistent company', async () => {
     const result = await sut.execute({
       companyId: faker.string.uuid(),
       description: faker.lorem.text(),

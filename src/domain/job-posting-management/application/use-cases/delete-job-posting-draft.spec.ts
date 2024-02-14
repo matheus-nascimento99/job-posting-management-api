@@ -6,20 +6,20 @@ import { InMemoryJobPostingsRepository } from 'test/repositories/in-memory-job-p
 
 import { BadRequestError } from '@/core/errors/bad-request'
 
-import { PublishJobPostingDraftUseCase } from './publish-job-posting-draft'
+import { DeleteJobPostingUseCase } from './delete-job-posting-draft'
 
 let inMemoryJobPostingsRepository: InMemoryJobPostingsRepository
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository
-let sut: PublishJobPostingDraftUseCase
+let sut: DeleteJobPostingUseCase
 
-describe('Publish job posting draft use case', () => {
+describe('Create job posting use case', () => {
   beforeEach(() => {
     inMemoryJobPostingsRepository = new InMemoryJobPostingsRepository()
     inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
-    sut = new PublishJobPostingDraftUseCase(inMemoryJobPostingsRepository)
+    sut = new DeleteJobPostingUseCase(inMemoryJobPostingsRepository)
   })
 
-  it('should be able to publish job posting draft', async () => {
+  it('should be able to delete a job posting draft', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 
@@ -30,11 +30,15 @@ describe('Publish job posting draft use case', () => {
 
     const jobPostingId = jobPosting.id.toString()
 
-    const result = await sut.execute({ jobPostingId })
+    const result = await sut.execute({
+      jobPostingId,
+    })
+
     expect(result.isRight()).toEqual(true)
+    expect(inMemoryJobPostingsRepository.items).toHaveLength(0)
   })
 
-  it('should not be able to publish job posting draft with an inexistent job posting draft', async () => {
+  it('should not be able to delete a job posting draft with an inexistent job posting draft', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 
@@ -44,7 +48,10 @@ describe('Publish job posting draft use case', () => {
 
     const jobPostingId = faker.string.uuid()
 
-    const result = await sut.execute({ jobPostingId })
+    const result = await sut.execute({
+      jobPostingId,
+    })
+
     expect(result.isLeft()).toEqual(true)
     expect(result.value).toBeInstanceOf(BadRequestError)
   })

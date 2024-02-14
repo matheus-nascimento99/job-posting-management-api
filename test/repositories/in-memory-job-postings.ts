@@ -27,4 +27,12 @@ export class InMemoryJobPostingsRepository implements JobPostingsRepository {
 
     this.items[jobPostingIndex] = data
   }
+
+  async delete(jobPostingId: UniqueEntityID): Promise<void> {
+    const jobPostingIndex = this.items.findIndex(
+      (item) => item.id.toString() === jobPostingId.toString(),
+    )
+
+    this.items.splice(jobPostingIndex, 1)
+  }
 }

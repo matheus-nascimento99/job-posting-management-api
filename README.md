@@ -26,10 +26,10 @@ Convert the following use cases into API endpoints:
 
 - `GET /companies`: List existing companies.
 - `GET /companies/:company_id`: Fetch a specific company by ID.
-- `POST /job`: Create a job posting draft.
-- `PUT /job/:job_id/publish`: Publish a job posting draft.
-- `PUT /job/:job_id`: Edit a job posting draft (title, location, description).
-- `DELETE /job/:job_id`: Delete a job posting draft.
+- `POST /job`: Create a job posting draft. ok
+- `PUT /job/:job_id/publish`: Publish a job posting draft. ok
+- `PUT /job/:job_id`: Edit a job posting draft (title, location, description). ok
+- `DELETE /job/:job_id`: Delete a job posting draft. ok
 - `PUT /job/:job_id/archive`: Archive an active job posting.
 
 ### Integration Features

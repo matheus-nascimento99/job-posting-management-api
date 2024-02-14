@@ -2,21 +2,20 @@ import { Either, left, right } from '@/core/either'
 import { BadRequestError } from '@/core/errors/bad-request'
 import { UniqueEntityID } from '@/core/value-objects/unique-entity-id'
 
-import { JobPostingStatus } from '../../enterprise/entities/job-posting'
 import { JobPostingsRepository } from '../repositories/job-postings'
 
-type PublishJobPostingDraftRequestUseCase = {
+type DeleteJobPostingRequestUseCase = {
   jobPostingId: string
 }
 
-type PublishJobPostingDraftResponseUseCase = Either<unknown, BadRequestError>
+type DeleteJobPostingResponseUseCase = Either<unknown, BadRequestError>
 
-export class PublishJobPostingDraftUseCase {
+export class DeleteJobPostingUseCase {
   constructor(private jobPostingsRepository: JobPostingsRepository) {}
 
   async execute({
     jobPostingId,
-  }: PublishJobPostingDraftRequestUseCase): Promise<PublishJobPostingDraftResponseUseCase> {
+  }: DeleteJobPostingRequestUseCase): Promise<DeleteJobPostingResponseUseCase> {
     const jobPosting = await this.jobPostingsRepository.findById(
       new UniqueEntityID(jobPostingId),
     )
@@ -25,11 +24,7 @@ export class PublishJobPostingDraftUseCase {
       return left(new BadRequestError('Job posting draft not found.'))
     }
 
-    jobPosting.status = JobPostingStatus.published
-    await this.jobPostingsRepository.save(
-      new UniqueEntityID(jobPostingId),
-      jobPosting,
-    )
+    await this.jobPostingsRepository.delete(jobPosting.id)
 
     return right({})
   }

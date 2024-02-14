@@ -16,12 +16,7 @@ type CreateJobPostingRequestUseCase = Omit<
   companyId: string
 }
 
-type CreateJobPostingResponseUseCase = Either<
-  {
-    jobPosting: JobPosting
-  },
-  BadRequestError
->
+type CreateJobPostingResponseUseCase = Either<unknown, BadRequestError>
 
 export class CreateJobPostingUseCase {
   constructor(
@@ -44,6 +39,6 @@ export class CreateJobPostingUseCase {
 
     await this.jobPostingsRepository.create(jobPosting)
 
-    return right({ jobPosting })
+    return right({})
   }
 }

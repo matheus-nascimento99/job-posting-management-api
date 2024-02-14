@@ -6,20 +6,20 @@ import { InMemoryJobPostingsRepository } from 'test/repositories/in-memory-job-p
 
 import { BadRequestError } from '@/core/errors/bad-request'
 
-import { PublishJobPostingDraftUseCase } from './publish-job-posting-draft'
+import { EditJobPostingUseCase } from './edit-job-posting-draft'
 
 let inMemoryJobPostingsRepository: InMemoryJobPostingsRepository
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository
-let sut: PublishJobPostingDraftUseCase
+let sut: EditJobPostingUseCase
 
-describe('Publish job posting draft use case', () => {
+describe('Edit job posting use case', () => {
   beforeEach(() => {
     inMemoryJobPostingsRepository = new InMemoryJobPostingsRepository()
     inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
-    sut = new PublishJobPostingDraftUseCase(inMemoryJobPostingsRepository)
+    sut = new EditJobPostingUseCase(inMemoryJobPostingsRepository)
   })
 
-  it('should be able to publish job posting draft', async () => {
+  it('should be able to edit a job posting draft', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 
@@ -30,11 +30,21 @@ describe('Publish job posting draft use case', () => {
 
     const jobPostingId = jobPosting.id.toString()
 
-    const result = await sut.execute({ jobPostingId })
+    const result = await sut.execute({
+      title: 'Title updated test',
+      description: 'Description updated test',
+      location: 'Location updated test',
+      jobPostingId,
+    })
+
     expect(result.isRight()).toEqual(true)
+    expect(inMemoryJobPostingsRepository.items).toHaveLength(1)
+    expect(inMemoryJobPostingsRepository.items[0]).toMatchObject({
+      title: 'Title updated test',
+    })
   })
 
-  it('should not be able to publish job posting draft with an inexistent job posting draft', async () => {
+  it('should not be able to edit a job posting with an inexistent job posting draft', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 
@@ -44,7 +54,13 @@ describe('Publish job posting draft use case', () => {
 
     const jobPostingId = faker.string.uuid()
 
-    const result = await sut.execute({ jobPostingId })
+    const result = await sut.execute({
+      title: 'Title updated test',
+      description: 'Description updated test',
+      location: 'Location updated test',
+      jobPostingId,
+    })
+
     expect(result.isLeft()).toEqual(true)
     expect(result.value).toBeInstanceOf(BadRequestError)
   })

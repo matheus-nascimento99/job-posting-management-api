@@ -5,7 +5,7 @@ import { InMemoryJobPostingsRepository } from 'test/repositories/in-memory-job-p
 
 import { BadRequestError } from '@/core/errors/bad-request'
 
-import { CreateJobPostingUseCase } from './create-job-posting'
+import { CreateJobPostingUseCase } from './create-job-posting-draft'
 
 let inMemoryJobPostingsRepository: InMemoryJobPostingsRepository
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository

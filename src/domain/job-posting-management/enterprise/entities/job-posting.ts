@@ -2,11 +2,11 @@ import { Entity } from '@/core/entity'
 import { Optional } from '@/core/types/optional'
 import { UniqueEntityID } from '@/core/value-objects/unique-entity-id'
 
-enum JobPostingStatus {
-  draft,
-  published,
-  archived,
-  rejected,
+export enum JobPostingStatus {
+  draft = 'draft',
+  published = 'published',
+  archived = 'archived',
+  rejected = 'rejected',
 }
 
 export interface JobPostingProps {

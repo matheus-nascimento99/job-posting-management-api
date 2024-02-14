@@ -2,25 +2,25 @@ import { Entity } from '@/core/entity'
 import { Optional } from '@/core/types/optional'
 import { UniqueEntityID } from '@/core/value-objects/unique-entity-id'
 
-enum JobStatus {
+enum JobPostingStatus {
   draft,
   published,
   archived,
   rejected,
 }
 
-export interface JobProps {
+export interface JobPostingProps {
   companyId: UniqueEntityID
   title: string
   description: string
   location: string
   notes?: string | null
-  status: JobStatus
+  status: JobPostingStatus
   createdAt: Date
   updatedAt?: Date
 }
 
-export class Job extends Entity<JobProps> {
+export class JobPosting extends Entity<JobPostingProps> {
   get companyId() {
     return this.props.companyId
   }
@@ -65,7 +65,7 @@ export class Job extends Entity<JobProps> {
     return this.props.status
   }
 
-  set status(value: JobStatus) {
+  set status(value: JobPostingStatus) {
     this.props.status = value
     this.touch()
   }
@@ -83,18 +83,18 @@ export class Job extends Entity<JobProps> {
   }
 
   static create(
-    data: Optional<JobProps, 'createdAt' | 'status'>,
+    data: Optional<JobPostingProps, 'createdAt' | 'status'>,
     id?: UniqueEntityID,
   ) {
-    const job = new Job(
+    const jobPosting = new JobPosting(
       {
         ...data,
-        status: data.status ?? JobStatus.draft,
+        status: data.status ?? JobPostingStatus.draft,
         createdAt: data.createdAt ?? new Date(),
       },
       id,
     )
 
-    return job
+    return jobPosting
   }
 }

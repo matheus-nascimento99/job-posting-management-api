@@ -30,7 +30,7 @@ Convert the following use cases into API endpoints:
 - `PUT /job/:job_id/publish`: Publish a job posting draft. ok
 - `PUT /job/:job_id`: Edit a job posting draft (title, location, description). ok
 - `DELETE /job/:job_id`: Delete a job posting draft. ok
-- `PUT /job/:job_id/archive`: Archive an active job posting.
+- `PUT /job/:job_id/archive`: Archive an active job posting. ok
 
 ### Integration Features
 

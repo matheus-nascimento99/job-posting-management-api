@@ -7,20 +7,20 @@ import { InMemoryJobPostingsRepository } from 'test/repositories/in-memory-job-p
 import { BadRequestError } from '@/core/errors/bad-request'
 
 import { JobPostingStatus } from '../../enterprise/entities/job-posting'
-import { PublishJobPostingDraftUseCase } from './publish-job-posting-draft'
+import { ArchiveActiveJobPostingUseCase } from './archive-active-job-posting'
 
 let inMemoryJobPostingsRepository: InMemoryJobPostingsRepository
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository
-let sut: PublishJobPostingDraftUseCase
+let sut: ArchiveActiveJobPostingUseCase
 
 describe('Publish job posting draft use case', () => {
   beforeEach(() => {
     inMemoryJobPostingsRepository = new InMemoryJobPostingsRepository()
     inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
-    sut = new PublishJobPostingDraftUseCase(inMemoryJobPostingsRepository)
+    sut = new ArchiveActiveJobPostingUseCase(inMemoryJobPostingsRepository)
   })
 
-  it('should be able to publish job posting draft', async () => {
+  it('should be able to archive an active job posting', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 
@@ -34,11 +34,11 @@ describe('Publish job posting draft use case', () => {
     const result = await sut.execute({ jobPostingId })
     expect(result.isRight()).toEqual(true)
     expect(inMemoryJobPostingsRepository.items[0]).toMatchObject({
-      status: JobPostingStatus.published,
+      status: JobPostingStatus.archived,
     })
   })
 
-  it('should not be able to publish job posting draft with an inexistent job posting draft', async () => {
+  it('should not be able to archive an active job posting with an inexistent active job posting', async () => {
     const company = makeCompany()
     inMemoryCompaniesRepository.create(company)
 

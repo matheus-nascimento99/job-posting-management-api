@@ -1,6 +1,9 @@
 {
   "name": "backend-developer-test",
   "version": "1.0.0",
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "description": "## Welcome!",
   "main": "index.js",
   "scripts": {

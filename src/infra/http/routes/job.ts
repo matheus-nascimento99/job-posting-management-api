@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { createJob } from '../controllers/create-job'
+import { createJob } from '../controllers/create-job-draft'
 import { deleteJobPostingDraft } from '../controllers/delete-job-posting-draft'
 import { editJobPostingDraft } from '../controllers/edit-job-posting-draft'
 import { publishJobPostingDraft } from '../controllers/publish-job-posting-draft'

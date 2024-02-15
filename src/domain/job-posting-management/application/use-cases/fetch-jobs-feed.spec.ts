@@ -14,8 +14,6 @@ describe('Fetch jobs feed use case', () => {
   it('should be able to fetch jobs feed', async () => {
     const result = await sut.execute()
 
-    console.log(result.value?.feed)
-
     expect(result.isRight()).toEqual(true)
     expect(result.value?.feed).toHaveLength(5)
   })

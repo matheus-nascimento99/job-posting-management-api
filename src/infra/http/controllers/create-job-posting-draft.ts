@@ -3,25 +3,27 @@ import z from 'zod'
 
 import { BadRequestError } from '@/core/errors/bad-request'
 
-import { makePublishJobPostingDraft } from './factories/make-publish-job-posting-draft'
+import { makeCreateJobPostingDraft } from './factories/make-create-job-posting-draft'
 
-export const publishJobPostingDraft = async (
+export const createJobPostingDraft = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   const schema = z.object({
-    job_id: z.string().uuid(),
+    companyId: z.string().uuid(),
+    title: z.string().min(1),
+    description: z.string().min(1),
+    location: z.string().min(1),
+    notes: z.string().nullable().optional(),
   })
 
-  const data = schema.parse(req.params)
+  const data = schema.parse(req.body)
 
-  const publishJobPostingDraftUseCase = makePublishJobPostingDraft()
+  const createJobPostingDraftUseCase = makeCreateJobPostingDraft()
 
   try {
-    const result = await publishJobPostingDraftUseCase.execute({
-      jobPostingId: data.job_id,
-    })
+    const result = await createJobPostingDraftUseCase.execute(data)
 
     if (result.isLeft()) {
       const error = result.value
@@ -34,7 +36,7 @@ export const publishJobPostingDraft = async (
       }
     }
 
-    return res.status(204).send()
+    return res.status(201).send()
   } catch (error) {
     next(error)
   }

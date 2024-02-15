@@ -6,17 +6,17 @@ import { InMemoryJobPostingsRepository } from 'test/repositories/in-memory-job-p
 
 import { BadRequestError } from '@/core/errors/bad-request'
 
-import { DeleteJobPostingUseCase } from './delete-job-posting-draft'
+import { DeleteJobPostingDraftUseCase } from './delete-job-posting-draft'
 
 let inMemoryJobPostingsRepository: InMemoryJobPostingsRepository
 let inMemoryCompaniesRepository: InMemoryCompaniesRepository
-let sut: DeleteJobPostingUseCase
+let sut: DeleteJobPostingDraftUseCase
 
 describe('Create job posting use case', () => {
   beforeEach(() => {
     inMemoryJobPostingsRepository = new InMemoryJobPostingsRepository()
     inMemoryCompaniesRepository = new InMemoryCompaniesRepository()
-    sut = new DeleteJobPostingUseCase(inMemoryJobPostingsRepository)
+    sut = new DeleteJobPostingDraftUseCase(inMemoryJobPostingsRepository)
   })
 
   it('should be able to delete a job posting draft', async () => {

@@ -10,7 +10,7 @@ type DeleteJobPostingRequestUseCase = {
 
 type DeleteJobPostingResponseUseCase = Either<unknown, BadRequestError>
 
-export class DeleteJobPostingUseCase {
+export class DeleteJobPostingDraftUseCase {
   constructor(private jobPostingsRepository: JobPostingsRepository) {}
 
   async execute({

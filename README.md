@@ -24,8 +24,8 @@ Your solution should incorporate the following components and libraries:
 
 Convert the following use cases into API endpoints:
 
-- `GET /companies`: List existing companies.
-- `GET /companies/:company_id`: Fetch a specific company by ID.
+- `GET /companies`: List existing companies. ok
+- `GET /companies/:company_id`: Fetch a specific company by ID. ok
 - `POST /job`: Create a job posting draft. ok
 - `PUT /job/:job_id/publish`: Publish a job posting draft. ok
 - `PUT /job/:job_id`: Edit a job posting draft (title, location, description). ok

@@ -5,7 +5,6 @@ import { getCompanyById } from '../controllers/get-company-by-id'
 
 const router = Router()
 
-router.post('/', getCompanyById)
 router.get('/', fetchCompanies)
 router.get('/:company_id', getCompanyById)
 

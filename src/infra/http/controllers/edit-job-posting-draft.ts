@@ -10,21 +10,25 @@ export const editJobPostingDraft = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const schema = z.object({
-    title: z.string().min(1),
-    location: z.string().min(1),
-    description: z.string().min(1),
+  const paramsSchema = z.object({
     job_id: z.string().uuid(),
   })
 
-  const data = schema.parse(req.params)
+  const bodySchema = z.object({
+    title: z.string().min(1),
+    location: z.string().min(1),
+    description: z.string().min(1),
+  })
+
+  const bodyData = bodySchema.parse(req.body)
+  const paramsData = paramsSchema.parse(req.params)
 
   const editJobPostingDraftUseCase = makeEditJobPostingDraft()
 
   try {
     const result = await editJobPostingDraftUseCase.execute({
-      ...data,
-      jobPostingId: data.job_id,
+      ...bodyData,
+      jobPostingId: paramsData.job_id,
     })
 
     if (result.isLeft()) {

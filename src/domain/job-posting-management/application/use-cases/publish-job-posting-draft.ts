@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { BadRequestError } from '@/core/errors/bad-request'
 import { UniqueEntityID } from '@/core/value-objects/unique-entity-id'
 
-import { JobPostingStatus } from '../../enterprise/entities/job-posting'
+import { MessagesQueue } from '../queue/messages-queue'
 import { JobPostingsRepository } from '../repositories/job-postings'
 
 type PublishJobPostingDraftRequestUseCase = {
@@ -12,7 +12,10 @@ type PublishJobPostingDraftRequestUseCase = {
 type PublishJobPostingDraftResponseUseCase = Either<unknown, BadRequestError>
 
 export class PublishJobPostingDraftUseCase {
-  constructor(private jobPostingsRepository: JobPostingsRepository) {}
+  constructor(
+    private jobPostingsRepository: JobPostingsRepository,
+    private messagesQueue: MessagesQueue,
+  ) {}
 
   async execute({
     jobPostingId,
@@ -25,11 +28,7 @@ export class PublishJobPostingDraftUseCase {
       return left(new BadRequestError('Job posting draft not found.'))
     }
 
-    jobPosting.status = JobPostingStatus.published
-    await this.jobPostingsRepository.save(
-      new UniqueEntityID(jobPostingId),
-      jobPosting,
-    )
+    await this.messagesQueue.send(jobPosting)
 
     return right({})
   }

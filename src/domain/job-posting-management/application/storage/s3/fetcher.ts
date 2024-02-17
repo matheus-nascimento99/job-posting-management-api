@@ -25,17 +25,22 @@ export class S3Fetcher implements StorageFetcher {
       Key: key,
     })
 
-    const response = await this.client.send(command)
-    // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
-    const body = response.Body
+    try {
+      const response = await this.client.send(command)
+      // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
+      const body = response.Body
 
-    if (!body) {
-      return []
+      if (!body) {
+        return []
+      }
+
+      const result = await body.transformToString()
+      const json = JSON.parse(result)
+
+      return json
+    } catch (error) {
+      console.log(error)
+      throw error
     }
-
-    const result = await body.transformToString()
-    const json = JSON.parse(result)
-
-    return json
   }
 }

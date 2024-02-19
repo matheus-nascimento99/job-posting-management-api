@@ -12,7 +12,7 @@ const client = new S3Client({
 const prisma = new PrismaClient()
 
 module.exports.run = async () => {
-  const jobs = await prisma.job.findMany()
+  const jobs = await prisma.job.findMany({where: {status: 'published'}})
 
   const command = new PutObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME,

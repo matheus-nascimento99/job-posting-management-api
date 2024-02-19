@@ -27,19 +27,6 @@ Run this command to create pre-established companies in models.sql file.
 ```bash
   npx prisma db seed
 ```
-## Tests
-### Unit
-Run this command to execute unit tests.
-
-```bash
-  npm run test
-```
-### E2E
-Run this command to execute E2E tests.
-
-```bash
-  npm run test:e2e
-```
 ## Lambda functions
 
 ### Jobs Feed
@@ -87,4 +74,18 @@ Run this command to launch Express.js server.
 
 ```bash
   npm run dev
+```
+
+## Tests
+### Unit
+Run this command to execute unit tests.
+
+```bash
+  npm run test
+```
+### E2E
+Run this command to execute E2E tests.
+
+```bash
+  npm run test:e2e
 ```

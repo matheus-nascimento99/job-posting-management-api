@@ -1,3 +1,6 @@
 # Dependences
 node_modules
 
+# lambdas
+feed-lambda
+job-posting-check-lambda

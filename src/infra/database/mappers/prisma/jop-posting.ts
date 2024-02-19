@@ -30,7 +30,7 @@ export class PrismaJobPostingMapper {
       title: jobPosting.title,
       description: jobPosting.description,
       location: jobPosting.location,
-      notes: jobPosting.location,
+      notes: jobPosting.notes,
       status: jobPosting.status,
       createdAt: jobPosting.createdAt,
       updatedAt: jobPosting.updatedAt,

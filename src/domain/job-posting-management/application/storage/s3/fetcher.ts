@@ -18,7 +18,10 @@ export class S3Fetcher implements StorageFetcher {
   }
 
   async fetch(): Promise<StorageFetcherResponse[]> {
-    const key = env.NODE_ENV === 'test' ? 'feed-test-e2e.json' : 'feed.json'
+    const key =
+      env.NODE_ENV === 'test' || env.NODE_ENV === 'development'
+        ? 'feed-test-e2e.json'
+        : 'feed.json'
 
     const command = new GetObjectCommand({
       Bucket: env.AWS_BUCKET_NAME,

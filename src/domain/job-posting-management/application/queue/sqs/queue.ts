@@ -20,7 +20,6 @@ export class SQSQueue implements MessagesQueue {
   }
 
   async send({ id, title, description }: JobPosting): Promise<void> {
-    console.log(id, title, description)
     const command = new SendMessageCommand({
       QueueUrl: env.AWS_SQS_URL,
       MessageBody: JSON.stringify({

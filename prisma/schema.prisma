@@ -33,7 +33,7 @@ model Job {
   title       String
   description String
   location    String
-  notes       String
+  notes       String?
   status      JobStatus @default(draft)
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")

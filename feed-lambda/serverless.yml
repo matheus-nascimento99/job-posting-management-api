@@ -1,0 +1,22 @@
+org: matheussn
+app: feed-lambda
+service: feed-lambda
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+
+functions:
+  rateHandler:
+    handler: index.run
+    events:
+      # Invoke Lambda function every minute
+      - schedule: rate(1 minute)
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    lambdaPort: 3001

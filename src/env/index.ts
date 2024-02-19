@@ -11,6 +11,8 @@ const envSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string().min(1),
   AWS_BUCKET_NAME: z.string().min(1),
   AWS_SQS_URL: z.string().url().min(1),
+  BASE_URL_OPEN_AI_API: z.string().url().min(1),
+  OPEN_AI_API_KEY: z.string().min(1),
 })
 
 const result = envSchema.safeParse(process.env)
